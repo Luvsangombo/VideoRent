@@ -1,5 +1,12 @@
-@extends('master')
+@extends('admin_master')
+@section('name')
+<h3> {{ session( 'admin_name' )}} </h3>
+<h4> Салбар: {{ session( 'admin_section' )}} </h4>
+@endsection
 @section('content')
+<br>
+<h3 class="text-center">Кино нэмэх</h3>
+<br>
 <div class="container">
 <form action="video" method="POST">
   {{@csrf_field()}}
@@ -40,7 +47,7 @@
       <textarea class="form-control" name='des' id="exampleFormControlTextarea1" rows="3"></textarea>
     </div>
   
-    <button type="submit" class="btn btn-primary">Хадгалах</button>
+    <button type="submit" class="btn btn-dark">Хадгалах</button>
   </form>
   @if(session('congratulation'))
   <h3 class="text-success">{{session('congratulation')}}</h3>

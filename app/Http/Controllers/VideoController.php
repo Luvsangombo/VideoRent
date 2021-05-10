@@ -63,12 +63,22 @@ class VideoController extends Controller
         $videos = DB::table('videos')->get()->where('catelog_id', $id);
         return view('videos', ['videos'=>$videos]);
     }
+    public function delete($id){
+        DB::table('videos')->delete($id);
+        return redirect('video_list');
+    }
 
     public function showTrailer($id)
     {
         $video= DB::table('videos')->get()->where('id', $id)->first();   
         return view('video_trailer', ['video'=>$video]);
 
+    }
+    public function video_list(){
+        if(session('admin_name')){
+        $videos = DB::table('videos')->get()->where('section_id', session('admin_section'));   
+        return view('video_list', ['video_list'=>$videos]);}
+        else return view('admin_login');
     }
     public function search(Request $request)
     {

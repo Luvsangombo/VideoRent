@@ -22,4 +22,14 @@ class Rent extends Controller
         return view('rent' , ['request'=>$video]);}
         else return redirect('login');
     }
+    public function list(){
+        if(session('admin_name')){
+        $rents_list=DB::table('rents')->get();
+        return view('rents_list', ['rents_list'=>$rents_list]);}
+        else return view('admin_login');
+    }
+    public function delete($id){
+        DB::table('rents')->delete($id);
+        return redirect('rents_list');
+    }
 }

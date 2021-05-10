@@ -19,8 +19,23 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'App\Http\Controllers\CategoryController@show');
 Route::get('videos/{id}', 'App\Http\Controllers\VideoController@show');
 Route::get('video', function () {
+    if(session('admin_name'))
     return view('insert_video',);
+    else return view('admin_login');
 });
+Route::get('addAdmin', function () {
+    return view('add_addmin',);
+});
+Route::post('addAdmin', 'App\Http\Controllers\AdminController@add');
+Route::get('admin_login', function(){
+    return view('admin_login');
+});
+Route::get('log_out','App\Http\Controllers\AdminController@logout');
+Route::get('rents_list','App\Http\Controllers\Rent@list' );
+Route::get('rents/{id}','App\Http\Controllers\Rent@delete');
+Route::post('admin_login', 'App\Http\Controllers\AdminController@login');
+Route::get('video_list', 'App\Http\Controllers\VideoController@video_list');
+Route::get('adminvideos/{id}','App\Http\Controllers\VideoController@delete' );
 Route::post('video', 'App\Http\Controllers\VideoController@store');
 Route::get('video/{id}', 'App\Http\Controllers\VideoController@show');
 Route::get('view/{id}', 'App\Http\Controllers\VideoController@showTrailer');

@@ -10,7 +10,7 @@
 
 
     <form method="post" action="login">
-      @csrf
+      {{@csrf_field()}}
         <div class="form-group">
           <label>Хэрэглэгчийн нэр</label>
           <input type="text" class="form-control" name="username" aria-describedby="emailHelp" placeholder="Username">

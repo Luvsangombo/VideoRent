@@ -25,7 +25,7 @@ class UserController extends Controller
             "phone" =>$request->get('phone')
         ]);
         $user->save();
-        return redirect('login')->with('success','Амжилттай бүртгүүллээ нэвтэрнэ үү');;
+        return redirect('login')->with('success','Амжилттай бүртгүүллээ нэвтэрнэ үү');
 
     }
     public function rent_login(Request $request){
