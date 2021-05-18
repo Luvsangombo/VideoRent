@@ -13,8 +13,11 @@ class UserController extends Controller
         return view('login');
     }
     public function sign_in(Request $request){
-        error_log("###############");
-        error_log($request->password);
+        $validatedData = $request->validate([
+            'username' => ['required', 'max:255'],
+            'password' => ['required'],
+            'phone' => ['required'],
+        ]);
         $user = new Renter([
             "name" => $request->get('name'),
             "surname" => $request->get('surname'),
@@ -29,8 +32,10 @@ class UserController extends Controller
 
     }
     public function rent_login(Request $request){
-        error_log("###############");
-        error_log($request->password);
+        $validatedData = $request->validate([
+            'username' => ['required', 'max:255'],
+            'password' => ['required'],
+        ]);
         $user=Renter::where('username', $request->username)->first();
         if(empty($user)){
             
@@ -60,6 +65,8 @@ class UserController extends Controller
     public function profile(){
         $user=DB::table('renters')->where('id', session('user_id'))->first();
         $videos=DB::table('rents')->where('user_id', session('user_id'))->get();
-        return view('profile', ['user'=>$user, 'videos'=>$videos]);
+        if(session('user_id')){
+        return view('profile', ['user'=>$user, 'videos'=>$videos]);}
+        else return 404;
     }
 }

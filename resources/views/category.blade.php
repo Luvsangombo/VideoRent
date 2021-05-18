@@ -28,9 +28,8 @@
 
 <div>
 
-<form action="{{ route('category.store') }}" method="post" enctype="multipart/form-data">
-        <!-- Add CSRF Token -->
-        @csrf
+<form action="store" method="post" enctype="multipart/form-data">
+        {{csrf_field() }}
     <div class="form-group">
         <label>Product Name</label>
         <input type="text" class="form-control" name="name" required>

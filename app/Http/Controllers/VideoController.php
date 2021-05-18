@@ -36,6 +36,17 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validateWithBag('post', [
+            'catelog_id' => ['required',],
+            'section_id' => ['required'],
+            'name' => ['required'],
+            'price' => ['required'],
+            'lenght' => ['required'],
+            'director' => ['required'],
+            'image_path' => ['required'],
+            'highlight_path' => ['required'],
+            'description' => ['required'],
+        ]);
        $video = new Video([
            "catelog_id" => intval($request->get('type')),
            "section_id" => 1,
@@ -83,7 +94,9 @@ class VideoController extends Controller
     public function search(Request $request)
     {
         error_log($request->name);
-        $videos = DB::table('videos')->where('name','LIKE','%'.$request->name.'%')->get();
+        $videos = DB::table('videos')->where('name','LIKE','%'.$request->name.'%')
+        ->orwhere('director','LIKE','%'.$request->name.'%')
+        ->orwhere('description','LIKE','%'.$request->name.'%')->get();
         return view('videos', ['videos'=>$videos]);
     }
 

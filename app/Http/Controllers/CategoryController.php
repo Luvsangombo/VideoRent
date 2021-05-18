@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -69,7 +70,8 @@ class CategoryController extends Controller
     public function show()
     {
         $post=Category::all();
-        return view('image', ['posts'=>$post]);
+        $videos=DB::table('videos')->orderBy('rented_times')->paginate(3);
+        return view('image', ['posts'=>$post, 'videos'=>$videos]);
     }
 
     /**

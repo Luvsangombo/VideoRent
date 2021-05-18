@@ -1,3 +1,7 @@
+@php
+use Carbon\Carbon;
+$today_date = Carbon::now();
+@endphp
 @extends('admin_master')
 @section('name')
 <h3> {{ session( 'admin_name' )}} </h3>
@@ -17,17 +21,30 @@
             <th scope="col">Дуусах огноо </th>
             <th scope="col">Киноны дугаар</th>
             <th scope="col"></th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
             @foreach($rents_list as $video)
+            @php
+              if($today_date>$video->endDate)
+                $diff=$today_date->diffInDays($video->endDate);
+            @endphp
           <tr>
             <th scope="row">{{$video->other}}</th>
-            <td>{{$video->price}}</td>
+            @if($video->endDate<$today_date)
+              <td class="text-danger">{{$video->price*$diff/10+$video->price}}</td>
+             @else  <td>{{$video->price}}</td>
+             @endif
             <td>{{$video->rentedDate}}</td>
-            <td>{{$video->endDate}}</td>
+            @if($video->endDate<$today_date)
+            <td class="text-danger">{{$video->endDate}}</td>
+           @else  <td>{{$video->endDate}}</td>
+           @endif
+          
             <td>{{$video->video_id}}</td>
             <td><a href="rents/{{$video->id}}">Устгах</a><td>
+            <td><a href="rented/{{$video->id}}">Сунгах</a><td>
           </tr>
         @endforeach
         </tbody>

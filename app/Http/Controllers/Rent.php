@@ -18,7 +18,9 @@ class Rent extends Controller
                 'price' => $request->price,
                 'other' => session('user_phone'),
             ]);
-        $video = DB::table('videos')->where('id', [$request->video_id])->first();
+            $video=DB::table('videos')->where('id',[$request->video_id])->first();
+            $rented_times=$video->rented_times+1;
+            DB::table('videos')->where('id',[$request->video_id])->update(['rented_times'=>$rented_times]);
         return view('rent' , ['request'=>$video]);}
         else return redirect('login');
     }
@@ -30,6 +32,10 @@ class Rent extends Controller
     }
     public function delete($id){
         DB::table('rents')->delete($id);
+        return redirect('rents_list');
+    }
+    public function update($id){
+        DB::table('rents')->where('id',[$id])->update(['endDate'=>Carbon::now()->addDays(7)]);
         return redirect('rents_list');
     }
 }

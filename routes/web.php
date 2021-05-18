@@ -23,6 +23,10 @@ Route::get('video', function () {
     return view('insert_video',);
     else return view('admin_login');
 });
+Route::get('store', function(){
+    return view('category');
+});
+Route::post('store',  'App\Http\Controllers\CategoryController@store');
 Route::get('addAdmin', function () {
     return view('add_addmin',);
 });
@@ -33,6 +37,7 @@ Route::get('admin_login', function(){
 Route::get('log_out','App\Http\Controllers\AdminController@logout');
 Route::get('rents_list','App\Http\Controllers\Rent@list' );
 Route::get('rents/{id}','App\Http\Controllers\Rent@delete');
+Route::get('rented/{id}','App\Http\Controllers\Rent@update');
 Route::post('admin_login', 'App\Http\Controllers\AdminController@login');
 Route::get('video_list', 'App\Http\Controllers\VideoController@video_list');
 Route::get('adminvideos/{id}','App\Http\Controllers\VideoController@delete' );
